@@ -9,7 +9,7 @@ In my data analytics studies and projects, I have learnt to handle large, comple
 In my free time, I enjoy exploring new data analysis tools and techniques, and looking for real-world business problem that could be solve using existing data. Adaptability and effective communication makes me a good team player in all kinds of role.
 
 > [!NOTE] 
-> This is a repository to showcase skills, share relevant projects in Data Analytics / Data Science related topics.
+> This is a repository to showcase relevant skills and projects in Data Analytics / Data Science related topics.
 
 ## Table of Contents
 
