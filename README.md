@@ -20,7 +20,7 @@ In my free time, I enjoy exploring new data analysis tools and techniques, and l
     - [Waze Customer Churned Analysis]()
   - SQL
     - [Covid 19 Data Exploration]()
-    - [Housing Data Cleaning]()
+    - [Air Quality Analysis]()
   - R
     - [Austin_Bikeshare_Analysis]()
   - Tableau
@@ -32,6 +32,8 @@ In my free time, I enjoy exploring new data analysis tools and techniques, and l
 ## Portfolio Projects
 
 This section you will find data projects name, files, objective, project description, skills required for the project, and packages in each of the projects.
+
+<br>
 
 ### Analyze Employee Turnover Rate and Create Predictive Models - Salifort Motors
 
@@ -57,11 +59,11 @@ If possible to predict employees likely to quit, it might be possible to identif
 
 ### Waze Customer Churned Analysis
 
-**Code**: [Salifort Motors Project.ipynb](https://github.com/Daryll05351/portfolio/blob/main/Salifort%20Motors%20Project.ipynb)
+**Code**: [Waze Customer Churned Data Analysis](https://github.com/Daryll05351/portfolio/blob/main/Salifort%20Motors%20Project.ipynb)
 
-**PACE Doc**: [Salifort Motor PACE document]()
+**PACE Doc**: [Waze Customer Churned - PACE Strategy Doc]()
 
-**Project Summary**: [Salifort Motor Project Summary]()
+**Project Summary**: [Waze Customer Churned - Project Summary]()
 
 **Goal**: 
 
@@ -70,6 +72,42 @@ If possible to predict employees likely to quit, it might be possible to identif
 **Skills**:
 
 **Packages**: 
+
+<br>
+
+### COVID-19 Data Exploration & Analysis
+
+**Code**: [COVID-19 Data Exploration Analysis](https://github.com/Daryll05351/portfolio/blob/main/COVID_portfolio_project.sql)
+
+**PACE Doc**: []()
+
+**Project Summary**: []()
+
+**Goal**: 
+
+**Description**: 
+
+**Skills**:
+
+**Packages**: _```pandas, numpy, sklearn, xgboost, matplotlib.pyplot, seaborn, pickle ```_
+
+<br>
+
+### Air Quality Data Analysis
+
+**Code**: [Air Quality Data Analysis](https://github.com/Daryll05351/portfolio/blob/main/air_quality_project.sql)
+
+**PACE Doc**: []()
+
+**Project Summary**: []()
+
+**Goal**: 
+
+**Description**: 
+
+**Skills**:
+
+**Packages**: _```pandas, numpy, sklearn, xgboost, matplotlib.pyplot, seaborn, pickle ```_
 
 <br>
 
