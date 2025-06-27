@@ -2,7 +2,7 @@
 
 ## About
 
-Hi, I'm Daryll! I have an business operation background in FMCG and F&B Manufacturing, has been managing ERP related field such as procurement, operations, production, technical, sales & marketing, and project management. Later in my career, I had developed Data Science skills from Coursera, DataCamp, Kaggles and more to improve my data analytic toolbox. I have discovered my passion towards data discovery -- uncovering meaningful insights, comes along with consistent self-growth on both personal and career development. 
+Hi, I'm Daryll! I have an business operation background in FMCG and F&B Manufacturing, has been managing ERP related field such as procurement, operations, production, technical, sales & marketing, and project management. Later in my career, I had developed Data Science skills from Coursera, DataCamp, Kaggles and others to improve my data analytic toolbox. I have discovered my passion towards data discovery -- uncovering meaningful insights, comes along with consistent self-growth on both personal and career development. 
 
 In my data analytics studies and projects, I have learnt to handle large, complex, and inconsistent datasets. Organise dataset into useful clean datasets and perform all kinds of EDA, statistical analysis, identifying patterns and trends, predicting models, and sharing insights to stakeholders.
 
@@ -17,12 +17,12 @@ In my free time, I enjoy exploring new data analysis tools and techniques, and l
 - [Portfolio Projects](#portfolio-projects)
   - Python
     - [Analyzing Employee Turnover Rate and Create Predictive Models](#analyze-employee-turnover-rate-and-create-predictive-models-salifort-motors) 
-    - [Waze Customer Churned Analysis]()
+    - [Waze Customer Churned Analysis](#waze-customer-churned-analysis)
   - SQL
-    - [Covid 19 Data Exploration]()
-    - [Air Quality Analysis]()
+    - [Covid 19 Data Exploration](#covid-19-data-exploration-&-analysis)
+    - [Air Quality Analysis](#air-quality-data-analysis)
   - R
-    - [Austin_Bikeshare_Analysis]()
+    - [Austin_Bikeshare_Analysis](#austin-bikeshare-analysis)
   - Tableau
     - [link to Tableau]()
   - MS Excel/Google Sheets
