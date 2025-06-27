@@ -1,5 +1,6 @@
 ---
 title: "Austin Bikeshare Analysis"
+author: Daryll
 format:
   html:
     toc: true
@@ -7,7 +8,7 @@ format:
     df-print: paged
 ---
 
-# Austin Bikeshare Project
+
 
 ## Goals
 
@@ -15,6 +16,7 @@ format:
 - Uncover and present additional meaningful insights from the dataset that could support operational decisions or improve the overall efficiency of the bikeshare system.
 
 ```{r setup, message=FALSE}
+# load libraries
 library(tidyverse)
 library(lubridate)
 library(janitor)
@@ -43,11 +45,10 @@ glimpse(station_df)
 
 ```{r date-time-formatting}
 bikeshare_df <- bikeshare_df %>%
-  mutate(
-    start_time = ymd_hms(start_time),
-    end_time = ymd_hms(end_time),
-    duration_minutes = as.numeric(difftime(end_time, start_time, units = "mins"))
-  )
+    mutate(
+        start_time = ymd_hms(start_time),
+        duration_minutes = as.numeric(start_time, units = "mins")
+    )
 ```
 
 ## Outlier Handling (Duration)
@@ -62,55 +63,101 @@ lower_bound <- q1 - 1.5 * iqr
 upper_bound <- q3 + 1.5 * iqr
 
 bikeshare_df <- bikeshare_df %>%
-  mutate(duration_capped = pmin(pmax(duration_minutes, lower_bound), upper_bound))
+    mutate(duration_capped = pmin(pmax(duration_minutes, lower_bound), upper_bound))
+
+# Add a boxplot to confirm outlier handling
+ggplot(bikeshare_df, aes(x = "", y = duration_capped)) +
+    geom_boxplot(fill = "lightblue") +
+    labs(title = "Capped Trip Duration Distribution", y = "Duration (minutes)")
 ```
 
 ## Rides by Hour of Day
 
 ```{r hourly-trips}
 bikeshare_df %>%
-  mutate(hour = hour(start_time)) %>%
-  count(hour) %>%
-  ggplot(aes(x = hour, y = n)) +
-  geom_col(fill = "steelblue") +
-  scale_y_continuous(labels = comma) +
-  labs(title = "Bikeshare Trips by Hour of Day", x = "Hour", y = "Number of Trips")
+    mutate(hour = hour(start_time)) %>%
+    count(hour) %>%
+    ggplot(aes(x = hour, y = n)) +
+    geom_col(fill = "steelblue") +
+    scale_y_continuous(labels = comma) +
+    labs(title = "Bikeshare Trips by Hour of Day", x = "Hour", y = "Number of Trips")
 ```
 
 ## Monthly Trend
 
 ```{r monthly-trips}
 bikeshare_df %>%
-  mutate(year_month = floor_date(start_time, "month")) %>%
-  count(year_month) %>%
-  ggplot(aes(x = year_month, y = n)) +
-  geom_line(color = "darkgreen") +
-  labs(title = "Monthly Bikeshare Usage Over Time", x = "Month", y = "Trips")
+    mutate(year_month = floor_date(start_time, "month")) %>%
+    count(year_month) %>%
+    ggplot(aes(x = year_month, y = n)) +
+    geom_line(color = "darkgreen") +
+    labs(title = "Monthly Bikeshare Usage Over Time", x = "Month", y = "Trips")
 ```
 
 ## Map of Stations by Status
+```{r station-map}
+library(sf)
+library(ggplot2)
+library(maps)
+# Extract latitude and longitude from 'location' column if present
+if ("location" %in% names(station_df)) {
+  station_df <- station_df %>%
+    mutate(
+      location = str_remove_all(location, "[()]"),
+      latitude = as.numeric(str_split_fixed(location, ",\\s*", 2)[,1]),
+      longitude = as.numeric(str_split_fixed(location, ",\\s*", 2)[,2])
+    )
+  # Use extracted columns for mapping
+  station_df$lat <- station_df$latitude
+  station_df$lon <- station_df$longitude
+}
 
-```{r station-map, eval=FALSE}
-# Optional: use leaflet or plotly for interactivity
-# Requires additional data cleanup
-library(leaflet)
-
-station_df %>%
+# Convert station_df to sf object
+station_sf <- station_df %>%
   filter(!is.na(lat), !is.na(lon)) %>%
-  leaflet() %>%
-  addTiles() %>%
-  addCircleMarkers(~lon, ~lat, color = ~ifelse(status == "open", "green", "red"),
-                   label = ~station_name, radius = 5)
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+
+# Get Texas map for context (Austin is in Texas)
+texas_map <- map_data("state") %>% filter(region == "texas")
+
+
+bbox <- st_bbox(station_sf)
+
+xlim_buffered <- bbox[c("xmin", "xmax")] + c(-0.05, 0.05)
+ylim_buffered <- bbox[c("ymin", "ymax")] + c(-0.05, 0.05)
+
+# Plot stations colored by status
+ggplot() +
+  geom_polygon(
+    data = texas_map,
+    aes(x = long, y = lat, group = group),
+    fill = "gray95", color = "gray80"
+  ) +
+  geom_sf(
+    data = station_sf,
+    aes(color = status),
+    size = 2, alpha = 0.8
+  ) +
+  scale_color_manual(values = c("open" = "green", "closed" = "red")) +
+  
+  # --- AMENDED LINE USING THE AUTOMATIC BOUNDS ---
+  coord_sf(xlim = xlim_buffered, ylim = ylim_buffered) +
+  
+  labs(
+    title = "Austin Bikeshare Stations by Status",
+    color = "Station Status"
+  ) +
+  theme_minimal()
 ```
 
 ## Conclusion
 
 - Stakeholders are looking for the best time to service their station and bicycles with minimal interruption on the bikeshare service between 12am–6am.
-- Sharebike seasons show fewer trips during December–February and June–July in both 2022 and 2023. Further analysis with weather data is recommended to confirm the trend.
+- Sharebike shows a consistent growth in usage over time, but there are two spikes during year 2018 which need further investigation. while a drop in usage during 2020 may be related to the COVID-19 pandemic.
 - Station closure status appears random; more investigation into station metadata or operational logs is recommended.
 
 ## Next Step:
 
-- Integrate external weather data to validate seasonal trends.
+- Investigate and correlate the 2018 usage spikes and the 2020 drop with external events and data.
 - Perform anomaly detection or clustering on closed stations to find non-obvious patterns.
 - Simulate downtime impacts during early morning hours to quantify disruption for maintenance planning.
