@@ -19,7 +19,7 @@ In my free time, I enjoy exploring new data analysis tools and techniques, and l
     - [Analyzing Employee Turnover Rate and Create Predictive Models](#analyze-employee-turnover-rate-and-create-predictive-models-salifort-motors) 
     - [Waze Customer Churned Analysis](#waze-customer-churned-analysis)
   - SQL
-    - [Covid 19 Data Exploration](#covid-19-data-exploration-&-analysis)
+    - [Covid 19 Data Exploration](#covid-19-data-exploration-analysis)
     - [Air Quality Analysis](#air-quality-data-analysis)
   - R
     - [Austin_Bikeshare_Analysis](#austin-bikeshare-analysis)
@@ -35,7 +35,7 @@ This section you will find data projects name, files, objective, project descrip
 
 <br>
 
-### Analyze Employee Turnover Rate and Create Predictive Models - Salifort Motors
+### Analyze Employee Turnover Rate and Create Predictive Models Salifort Motors
 
 **Code**: [Salifort Motors Project.ipynb](https://github.com/Daryll05351/portfolio/blob/main/Salifort%20Motors%20Project.ipynb)
 
@@ -75,7 +75,7 @@ If possible to predict employees likely to quit, it might be possible to identif
 
 <br>
 
-### COVID-19 Data Exploration & Analysis
+### COVID-19 Data Exploration Analysis
 
 **Code**: [COVID-19 Data Exploration Analysis](https://github.com/Daryll05351/portfolio/blob/main/COVID_portfolio_project.sql)
 
