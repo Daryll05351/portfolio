@@ -1,0 +1,116 @@
+---
+title: "Austin Bikeshare Analysis"
+format:
+  html:
+    toc: true
+    code-fold: true
+    df-print: paged
+---
+
+# Austin Bikeshare Project
+
+## Goals
+
+- Identify the optimal time window for performing station and bicycle maintenance that minimizes disruption to bikeshare operations, based on usage patterns across different hours of the day.
+- Uncover and present additional meaningful insights from the dataset that could support operational decisions or improve the overall efficiency of the bikeshare system.
+
+```{r setup, message=FALSE}
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(ggplot2)
+library(scales)
+```
+
+```{r load-data}
+# Load datasets
+bikeshare_df <- read_csv("bikeshare_trips.csv")
+station_df <- read_csv("bikeshare_station.csv")
+
+# Clean column names
+bikeshare_df <- clean_names(bikeshare_df)
+station_df <- clean_names(station_df)
+```
+
+## Data Overview
+
+```{r data-preview}
+glimpse(bikeshare_df)
+glimpse(station_df)
+```
+
+## Convert and Parse Timestamps
+
+```{r date-time-formatting}
+bikeshare_df <- bikeshare_df %>%
+  mutate(
+    start_time = ymd_hms(start_time),
+    end_time = ymd_hms(end_time),
+    duration_minutes = as.numeric(difftime(end_time, start_time, units = "mins"))
+  )
+```
+
+## Outlier Handling (Duration)
+
+```{r outlier-capping}
+# Use IQR method to cap outliers
+q1 <- quantile(bikeshare_df$duration_minutes, 0.25, na.rm = TRUE)
+q3 <- quantile(bikeshare_df$duration_minutes, 0.75, na.rm = TRUE)
+iqr <- q3 - q1
+
+lower_bound <- q1 - 1.5 * iqr
+upper_bound <- q3 + 1.5 * iqr
+
+bikeshare_df <- bikeshare_df %>%
+  mutate(duration_capped = pmin(pmax(duration_minutes, lower_bound), upper_bound))
+```
+
+## Rides by Hour of Day
+
+```{r hourly-trips}
+bikeshare_df %>%
+  mutate(hour = hour(start_time)) %>%
+  count(hour) %>%
+  ggplot(aes(x = hour, y = n)) +
+  geom_col(fill = "steelblue") +
+  scale_y_continuous(labels = comma) +
+  labs(title = "Bikeshare Trips by Hour of Day", x = "Hour", y = "Number of Trips")
+```
+
+## Monthly Trend
+
+```{r monthly-trips}
+bikeshare_df %>%
+  mutate(year_month = floor_date(start_time, "month")) %>%
+  count(year_month) %>%
+  ggplot(aes(x = year_month, y = n)) +
+  geom_line(color = "darkgreen") +
+  labs(title = "Monthly Bikeshare Usage Over Time", x = "Month", y = "Trips")
+```
+
+## Map of Stations by Status
+
+```{r station-map, eval=FALSE}
+# Optional: use leaflet or plotly for interactivity
+# Requires additional data cleanup
+library(leaflet)
+
+station_df %>%
+  filter(!is.na(lat), !is.na(lon)) %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers(~lon, ~lat, color = ~ifelse(status == "open", "green", "red"),
+                   label = ~station_name, radius = 5)
+```
+
+## Conclusion
+
+- Stakeholders are looking for the best time to service their station and bicycles with minimal interruption on the bikeshare service between 12am–6am.
+- Sharebike seasons show fewer trips during December–February and June–July in both 2022 and 2023. Further analysis with weather data is recommended to confirm the trend.
+- Station closure status appears random; more investigation into station metadata or operational logs is recommended.
+
+## Next Step:
+
+- Integrate external weather data to validate seasonal trends.
+- Perform anomaly detection or clustering on closed stations to find non-obvious patterns.
+- Simulate downtime impacts during early morning hours to quantify disruption for maintenance planning.
