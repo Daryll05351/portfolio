@@ -28,6 +28,7 @@ In my free time, I enjoy exploring new data analysis tools and techniques, and l
   - MS Excel/Google Sheets
 - [Certificates]()
 
+
 ## Portfolio Projects
 
 This section you will find data projects name, files, objective, project description, skills required for the project, and packages in each of the projects.
@@ -52,6 +53,7 @@ If possible to predict employees likely to quit, it might be possible to identif
 
 **Packages**: _```pandas, numpy, sklearn, xgboost, matplotlib.pyplot, seaborn, pickle ```_
 
+<br>
 
 ### Waze Customer Churned Analysis
 
@@ -68,6 +70,8 @@ If possible to predict employees likely to quit, it might be possible to identif
 **Skills**:
 
 **Packages**: 
+
+<br>
 
 ### Austin Bikeshare Analysis
 
