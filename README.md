@@ -22,7 +22,7 @@ In my free time, I enjoy exploring new data analysis tools and techniques, and l
     - [Covid 19 Data Exploration]()
     - [Housing Data Cleaning]()
   - R
-    - [Project A]()
+    - [Austin_Bikeshare_Analysis]()
   - Tableau
     - [link to Tableau]()
   - MS Excel/Google Sheets
@@ -68,6 +68,18 @@ If possible to predict employees likely to quit, it might be possible to identif
 **Skills**:
 
 **Packages**: 
+
+### Austin Bikeshare Analysis
+
+**Code**: [Austin Bikeshare Analysis.html](https://daryll.quarto.pub/austin-bikeshare-analysis-5fc4)
+
+**Goal**: 
+- Identify the optimal time window for performing station and bicycle maintenance that minimizes disruption to bikeshare operations, based on usage patterns across different hours of the day.
+- Uncover and present additional meaningful insights from the dataset that could support operational decisions or improve the overall efficiency of the bikeshare system.
+
+**Skills**: Load data, transform data, EDA, eliminate outliers, data time formatting, boxplot, line graph, map, bar plot visualization.
+
+**Packages**: _```tidyverse, lubridate, janitor, ggplot2, scales, sf ```_
 
 
 ## Certificates
